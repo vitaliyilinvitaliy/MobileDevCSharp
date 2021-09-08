@@ -1,0 +1,26 @@
+stages:
+  - build  
+  - test
+
+build_job:
+  stage: build
+  only:
+    - branches
+  script:
+    - 'cd ConsoleApp1'
+    - '"D:\Tools\Nuget\nuget.exe" restore'
+    - '"D:\Visual Studio\Community\MSBuild\Current\Bin\MSBuild.exe" ConsoleApp1.sln'  
+  artifacts:
+    paths:
+      - 'ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.exe'
+
+      
+ 
+test_job:
+  stage: test
+  script:
+  - echo "Starting tests ..."
+  - cd "ConsoleApp1\UnitTestProject1\bin\Debug"  
+
+  - '"D:\Visual Studio\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" UnitTestProject1.dll'
+
